@@ -1,237 +1,333 @@
-
 import { motion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 const services = [
   {
-    title: 'Web Development',
-    description: 'Blazing-fast web apps built with React, Next.js, and Node.js. Scalable architecture from landing pages to full SaaS platforms.',
+    title: 'Customised Software Development',
+    description: "We turn cutting-edge ideas into robust expandable software that fits your company's needs perfectly.",
+    points: ['Custom Architecture', 'Scalable Solutions', 'Modern Tech Stack'],
     icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
-        <path d="M8 21H16M12 17V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M7 8L10 11L7 14M13 14H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 21h8M12 17v4" />
       </svg>
     ),
-    color: '#2563EB',
+    badge: 'CORE'
   },
   {
-    title: 'Mobile Apps',
-    description: 'Cross-platform iOS & Android apps with React Native and Flutter — smooth, native-feel experiences users love.',
+    title: 'Enterprise Solutions',
+    description: 'We provide full-scale business solutions that boost your productivity and help your company achieve its highest goals.',
+    points: ['Business Integration', 'Process Automation', 'Enterprise Security'],
     icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" strokeWidth="2"/>
-        <circle cx="12" cy="17" r="1" fill="currentColor"/>
-        <path d="M9 6H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <rect x="4" y="2" width="16" height="20" rx="2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01" />
       </svg>
     ),
-    color: '#0891B2',
+    badge: 'SCALE'
   },
   {
-    title: 'UI/UX Design',
-    description: 'Research-driven, pixel-perfect interfaces crafted in Figma. From wireframes to polished design systems.',
+    title: 'Cloud Solutions & DevOps',
+    description: 'We set up secure, flexible, and smart cloud systems on AWS, GCP, and Azure with automated CI/CD pipelines.',
+    points: ['Cloud Migration', 'AWS/Azure Pods', 'Containerization'],
     icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <path d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z" stroke="currentColor" strokeWidth="2"/>
-        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.1 9.1 4 4 0 0 0 7 17h10.5" />
       </svg>
     ),
-    color: '#7C3AED',
+    badge: 'CLOUD'
   },
   {
-    title: 'Cloud & DevOps',
-    description: 'Bulletproof CI/CD pipelines, Docker/Kubernetes, and AWS/GCP infrastructure with 99.9% uptime SLAs.',
+    title: 'Expert IT Consultancy',
+    description: 'We guide you in picking the right software stack and architectural patterns to ensure long-term ROI.',
+    points: ['Strategic Roadmaps', 'Technical Advisory', 'Security Audits'],
     icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <path d="M18 10H6C3.79 10 2 11.79 2 14C2 16.21 3.79 18 6 18H18C20.21 18 22 16.21 22 14C22 11.79 20.21 10 18 10Z" stroke="currentColor" strokeWidth="2"/>
-        <path d="M12 6V10M9 8L12 5L15 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z" />
       </svg>
     ),
-    color: '#059669',
+    badge: 'ADVISORY'
   },
   {
-    title: 'API Development',
-    description: 'RESTful & GraphQL APIs built for scale. Seamless integrations with third-party services and legacy systems.',
+    title: 'Next-Gen Web Applications',
+    description: 'Blazing fast, SEO-optimized web applications with Next.js, React, and micro-frontends designed for high traffic.',
+    points: ['Ultra Fast TTFB', 'Responsive UI', 'PWA Capabilities'],
     icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <path d="M15 7H9C7.34 7 6 8.34 6 10V14C6 15.66 7.34 17 9 17H15C16.66 17 18 15.66 18 14V10C18 8.34 16.66 7 15 7Z" stroke="currentColor" strokeWidth="2"/>
-        <path d="M9 11H15M9 14H12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
       </svg>
     ),
-    color: '#DB2777',
+    badge: 'WEB'
   },
   {
-    title: 'Consulting',
-    description: 'Technology strategy, digital transformation roadmaps, and architecture reviews to align tech with business goals.',
+    title: 'iOS & Android App Development',
+    description: 'We build fluid native and cross-platform mobile experiences that hook users and drive repeat engagements.',
+    points: ['React Native / Flutter', 'Native Performance', 'Offline-First Storage'],
     icon: (
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="2"/>
-        <path d="M5 20C5 17.24 8.13 15 12 15C15.87 15 19 17.24 19 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M19 8H22M17.5 5.5L19.5 3.5M17.5 10.5L19.5 12.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <rect x="5" y="2" width="14" height="20" rx="2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01" />
       </svg>
     ),
-    color: '#D97706',
+    badge: 'MOBILE'
+  },
+  {
+    title: 'MVP Product Development',
+    description: 'We launch investor-ready MVPs within 4-6 weeks to test hypotheses and validate product-market fit fast.',
+    points: ['Rapid Turnaround', 'Core Feature Set', 'Analytics Integrated'],
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+    badge: 'MVP'
+  },
+  {
+    title: 'UI/UX & Product Design',
+    description: 'User-centric interface design systems in Figma that transform complex multi-step workflows into effortless journeys.',
+    points: ['Wireframing & Prototypes', 'Design Systems', 'Micro-Interactions'],
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+      </svg>
+    ),
+    badge: 'DESIGN'
+  },
+  {
+    title: 'Dedicated Engineering Squads',
+    description: 'Scale your technical capacity with pre-vetted senior software engineers, QA leads, and architects on demand.',
+    points: ['Senior Engineers', 'Flexible Timezones', 'Direct Slack Access'],
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    ),
+    badge: 'TEAM'
   },
 ]
 
-function ServiceCard({ service, index }) {
-  const [hovered, setHovered] = useState(false)
+const processSteps = [
+  {
+    step: '01',
+    title: 'Discovery & Product Architecture',
+    description: 'We audit your requirements, map system architecture, select the optimal tech stack, and define crystal-clear milestones.',
+    color: '#0284c7',
+  },
+  {
+    step: '02',
+    title: 'High-Fidelity UI/UX & Prototyping',
+    description: 'Interactive wireframes and design systems built in Figma with focus on maximum user retention and accessibility.',
+    color: '#2563eb',
+  },
+  {
+    step: '03',
+    title: 'Agile Engineering & Continuous Testing',
+    description: 'Two-week sprint delivery, automated CI/CD pipelines, strict code reviews, and comprehensive unit/integration testing.',
+    color: '#7c3aed',
+  },
+  {
+    step: '04',
+    title: 'Production Launch & SLA Monitoring',
+    description: 'Zero-downtime deployment, infrastructure auto-scaling setup, 24/7 logging, and continuous proactive support.',
+    color: '#0d9488',
+  },
+]
+
+// 🚀 DEVIONX SIGNATURE CARD WITH AMBIENT SHADOW & SPOTLIGHT
+function DevionxPremiumCard({ children }) {
+  const cardRef = useRef(null)
+
+  const handleMouseMove = (event) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    cardRef.current.style.setProperty('--mx', `${event.clientX - rect.left}px`)
+    cardRef.current.style.setProperty('--my', `${event.clientY - rect.top}px`)
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 48 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: 'easeOut' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      className="group relative flex h-full flex-col rounded-2xl bg-white border border-slate-200/90 p-7 lg:p-8 transition-all duration-400 ease-out 
+      hover:-translate-y-2 hover:border-blue-400/60
+      shadow-[0_2px_10px_rgba(15,23,42,0.03)]
+      hover:shadow-[0_22px_45px_-12px_rgba(37,99,235,0.22),0_0_20px_-3px_rgba(59,130,246,0.12)]"
     >
-      <div
-        className="relative h-full p-6 rounded-2xl overflow-hidden transition-all duration-500 bg-white border border-slate-200"
+      {/* DevionX Cursor Spotlight Follower */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: hovered
-            ? `radial-gradient(circle at 0% 0%, #ffffff 0%, #f8fafc 100%)`
-            : '#ffffff',
-          borderColor: hovered ? `${service.color}40` : '#e2e8f0',
-          backdropFilter: 'blur(14px)',
-          transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
-          boxShadow: hovered
-            ? `0 20px 30px -10px rgba(0,0,0,0.04), 0 0 25px -5px ${service.color}15`
-            : '0 4px 6px -1px rgba(0,0,0,0.02)',
-          cursor: 'pointer',
+          background: 'radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(37,99,235,0.08), transparent 65%)',
         }}
-      >
-        {/* Top accent */}
-        <div
-          className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-500"
-          style={{
-            background: `linear-gradient(90deg, transparent, ${service.color}, transparent)`,
-            opacity: hovered ? 0.85 : 0.2,
-          }}
-        />
+      />
 
-        {/* Glow blob */}
-        <div
-          className="absolute -top-16 -right-16 w-48 h-48 rounded-full pointer-events-none transition-opacity duration-500"
-          style={{
-            background: service.color,
-            opacity: hovered ? 0.12 : 0.04,
-            filter: 'blur(36px)',
-          }}
-        />
+      {/* Top subtle neon line highlight on hover */}
+      <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-blue-500/0 to-transparent transition-all duration-500 group-hover:via-blue-500/80" />
 
-        {/* Icon */}
-        <div
-          className="relative z-10 w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-all duration-400"
-          style={{
-            background: hovered ? service.color : `${service.color}10`,
-            border: `1px solid ${service.color}20`,
-            color: hovered ? '#ffffff' : service.color,
-          }}
-        >
-          {service.icon}
-        </div>
-
-        <h3 className="relative z-10 text-slate-900 text-lg font-bold mb-2 tracking-tight">
-          {service.title}
-        </h3>
-        <p className="relative z-10 text-slate-600 text-sm leading-relaxed font-normal">
-          {service.description}
-        </p>
-      </div>
-    </motion.div>
+      <div className="relative z-10 flex h-full flex-col">{children}</div>
+    </div>
   )
 }
-
-
-
-
-
 
 export default function ServicesPreview() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.1 })
 
   return (
-    <section
-      id="services"
-      ref={ref}
-      className="relative pt-17 pb-8 bg-[#f8fafc] overflow-hidden scroll-mt-24"
-    >
-   
+    <div className="bg-[#f8fafc] overflow-hidden">
+      {/* 🚀 SERVICES SECTION */}
+      <section id="services" ref={ref} className="relative pt-24 pb-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Header Title Block */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="mb-16 max-w-3xl"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-blue-50 text-blue-600 border border-blue-200/80 mb-4">
+              <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping" />
+              // WHAT WE DO
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight mb-4">
+              Comprehensive Services For{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600">
+                High-Growth Digital Products
+              </span>
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+              We design, build, and scale world-class software solutions tailored to your operational bottlenecks.
+            </p>
+          </motion.div>
 
-      {/* Dot grid */}
-      <svg className="absolute inset-0 w-full h-full z-0" style={{ opacity: 0.06 }}>
-        <defs>
-          <pattern id="dotSvc" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1.5" fill="#94a3b8" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#dotSvc)" />
-      </svg>
+          {/* Services Grid (3 Columns) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            {services.map((service, index) => (
+              <Link key={service.title} to="/services" className="block h-full no-underline">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.45, delay: (index % 3) * 0.08 }}
+                  className="h-full"
+                >
+                  <DevionxPremiumCard>
+                    {/* Top Row: Icon & Tag */}
+                    <div className="mb-6 flex items-start justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-[0_10px_20px_-5px_rgba(37,99,235,0.4)] transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-2">
+                        {service.icon}
+                      </div>
+                      <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-slate-100 text-slate-500 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
 
-    
-   
+                    <h3 className="mb-2.5 text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="mb-5 text-sm leading-relaxed text-slate-500 font-normal">
+                      {service.description}
+                    </p>
 
+                    {/* Feature points */}
+                    <ul className="mb-6 flex flex-grow flex-col gap-2.5">
+                      {service.points.map((point) => (
+                        <li key={point} className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-slate-700">
+                          <svg className="w-4 h-4 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                          </svg>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
 
-
-      {/* Glows */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full" style={{ background: 'radial-gradient(circle, rgba(37,99,235,0.04), transparent 70%)', filter: 'blur(60px)' }} />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full" style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.03), transparent 70%)', filter: 'blur(60px)' }} />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-14"
-        >
-          <p className="text-blue-600 text-xs font-bold tracking-[0.25em] uppercase mb-4">What We Do</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tight text-slate-900">
-            <span>Our Core </span>
-            <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg, #2563EB, #0891B2)' }}>
-              Services
-            </span>
-          </h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto mb-3 md:mb-16 font-medium">
-            End-to-end digital solutions crafted to turn your vision into a competitive advantage.
-          </p>
-        </motion.div>
-
-        {/* Grid — 3 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.slice(0, 3).map((service, index) => (
-            <Link key={service.title} to="/services">
-              <ServiceCard service={service} index={index} />
-            </Link>
-          ))}
+                    {/* Bottom CTA footer */}
+                    <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-4 text-xs font-bold tracking-wider text-slate-400 transition-colors group-hover:text-blue-600">
+                      <span>EXPLORE CAPABILITIES</span>
+                      <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </div>
+                  </DevionxPremiumCard>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
         </div>
+      </section>
 
-        {/* Link to full Services page */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="text-center mt-14"
-        >
-          <Link to="/services">
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-3 px-8 py-3.5 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/10 transition-colors duration-200"
-            >
-              View All Services
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </motion.button>
-          </Link>
-        </motion.div>
-      </div>
-    </section>
+      {/* 🚀 PROCESS SECTION WITH SIGNATURE SHADOW */}
+      <section className="py-24 relative overflow-hidden bg-slate-100/70 border-t border-slate-200/80">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative">
+          
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600">// HOW WE EXECUTE</span>
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-2">
+              Our Development <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Methodology</span>
+            </h2>
+          </div>
+
+          {/* Central vertical connecting line */}
+          <div className="absolute left-4 md:left-1/2 top-40 bottom-10 w-[2px] bg-slate-200 hidden md:block -translate-x-1/2" />
+
+          <div className="space-y-10 md:space-y-16">
+            {processSteps.map((step, index) => {
+              const isLeft = index % 2 === 0
+              return (
+                <div
+                  key={step.step}
+                  className={`relative flex items-center md:justify-between w-full ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="w-full md:w-[46%]"
+                  >
+                    {/* DevionX Ambient Shadow Process Card */}
+                    <div className="group relative rounded-2xl bg-white p-7 border border-slate-200/80 
+                      shadow-[0_4px_20px_rgba(15,23,42,0.03)]
+                      hover:shadow-[0_20px_45px_-10px_rgba(37,99,235,0.25)] 
+                      hover:border-blue-400/50 transition-all duration-300 hover:-translate-y-1"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div
+                          className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center font-mono font-black text-white text-base shadow-md"
+                          style={{ backgroundColor: step.color }}
+                        >
+                          {step.step}
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold font-mono tracking-widest uppercase mb-1" style={{ color: step.color }}>
+                            STAGE {step.step}
+                          </div>
+                          <h3 className="text-lg font-bold text-slate-900 mb-2">{step.title}</h3>
+                          <p className="text-slate-600 text-sm leading-relaxed">{step.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Central Node Dot */}
+                  <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center w-7 h-7 z-10">
+                    <div
+                      className="w-4 h-4 rounded-full border-[3px] border-white shadow-[0_0_12px_rgba(37,99,235,0.5)]"
+                      style={{ backgroundColor: step.color }}
+                    />
+                  </div>
+
+                  <div className="hidden md:block w-[46%]" />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
